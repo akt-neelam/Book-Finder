@@ -1,13 +1,22 @@
 import requests
 import textwrap
 
-def fetch_book(search_query, limit_filter):
+def fetch_book(search_query, limit_filter, search_type):
     """The core logic function for fetching the book details."""
     
     url = "https://openlibrary.org/search.json"
 
+    if search_type == "Author":
+        payload={"author": search_query, "limit": limit_filter}
+
+    elif search_type == "Title":
+        payload = {"title": search_query, "limit": limit_filter}
+    
+    else:
+        payload = {"q": search_query, "limit": limit_filter}
+
     try:
-        response = requests.get(url, params=search_query, timeout=10)
+        response = requests.get(url, params=payload, timeout=10)
         response.raise_for_status()
         data = response.json()
         
