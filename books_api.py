@@ -1,30 +1,13 @@
 import requests
 import textwrap
 
-def fetch_book():
-    """From here you can search for books either by Author name or by Book title.
-    You can filter out how many results you want by entering your desired number.
-    Its results are then passed to the next function where you can select the book you want."""
+def fetch_book(search_query, limit_filter):
+    """The core logic function for fetching the book details."""
     
     url = "https://openlibrary.org/search.json"
 
-    confirmation = input("\nDo you want to search by the book name or author? \n(Enter 'B' for book or 'A' for author)\n").strip().lower()
-    if confirmation == 'b':
-        title = input("\nEnter BOOK name: ")
-        limit_filter = int(input("\nHow many results would you want to see? ".strip()))
-        params = {"q": title, "limit": limit_filter}
-
-    elif confirmation == 'a':
-        author_name = input("\nEnter AUTHOR name: ")
-        limit_filter = int(input("\nHow many results would you want to see? ").strip())
-        params = {"q": author_name, "limit": limit_filter}
-
-    else:
-        print("Book or Author!!")
-        exit()
-
     try:
-        response = requests.get(url, params=params, timeout=10)
+        response = requests.get(url, params=search_query, timeout=10)
         response.raise_for_status()
         data = response.json()
         
