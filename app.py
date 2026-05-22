@@ -1,6 +1,7 @@
 import streamlit as st
 from books_api import fetch_book
 
+
 st.title("Book Searcher")
 st.divider()
 
@@ -11,6 +12,7 @@ search_condition = st.radio(
 
 if search_condition == "Author":
     st.text_input("Enter name of the Author", placeholder="e.g Charles Dickens")
+    fetch_book()
 
 elif search_condition == "Title":
     st.text_input("Enter the Title of the Book", placeholder="e.g Oliver Twist")
